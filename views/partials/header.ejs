@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>GameHub</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <%
+      games.forEach(game => { ;
+        if (req.params.myGame === 'diceRoller') { %>
+            <link rel="stylesheet" href="/css/<%=game.cssFile%>">
+  <%          
+        }
+      });
+  %>
+</head>
+<body>
+  <header>
+    <h1>
+      <a href="/">GameHub</a>
+    </h1>
+    <nav>
+        <%
+        games.forEach(game => { %>
+            <a href="/game/<%=game.name%>"><%=game.title%></a>
+            
+        <% }); %>
+    </nav>
+  </header>
