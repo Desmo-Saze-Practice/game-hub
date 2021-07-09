@@ -5,14 +5,8 @@
   <meta charset="UTF-8">
   <title>GameHub</title>
   <link rel="stylesheet" href="/css/style.css">
-  <%
-      games.forEach(game => { ;
-        if (req.params.myGame === 'diceRoller') { %>
-            <link rel="stylesheet" href="/css/<%=game.cssFile%>">
-  <%          
-        }
-      });
-  %>
+  <link rel="stylesheet" href="/css/diceRoller.css">
+
 </head>
 <body>
   <header>
@@ -20,10 +14,18 @@
       <a href="/">GameHub</a>
     </h1>
     <nav>
-        <%
-        games.forEach(game => { %>
-            <a href="/game/<%=game.name%>"><%=game.title%></a>
-            
-        <% }); %>
+      <ul>
+        <% for (const game of games) { %>
+          <li><a href="/game/<%=game.name%>"><%=game.title%></a></li>
+        <% }; %>
+      </ul>
     </nav>
   </header>
+  <main>
+    <h3>
+      <% if (locals.currentGame) { %>
+        <%= locals.games.find(game => game.name === currentGame).title %>
+      <% } else if (locals.title) { %>
+        <%= title %>
+        <% } %>
+    </h3>
