@@ -19,14 +19,7 @@ const routes = require('./public/routes');
 
 app.use(routes);
 
-// console.dir(app.locals);
-
-// defines games in two steps
-const gamesData = require('./games.json');
-
-app.locals.games = gamesData;
-
-app.locals.test = "mais qui peut me tester ?"
+// app.locals.games = require('./games.json');
 
 // OR (defines games in one step)
 // app.locals.games = require('./games.json');

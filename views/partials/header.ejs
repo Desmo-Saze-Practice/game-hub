@@ -5,7 +5,9 @@
   <meta charset="UTF-8">
   <title>GameHub</title>
   <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="/css/diceRoller.css">
+  <% if (locals.cssFile) { %>
+  <link rel="stylesheet" href="/css/<%=cssFile%>">
+  <% } %>
 
 </head>
 <body>
@@ -15,7 +17,8 @@
     </h1>
     <nav>
       <ul>
-        <% for (const game of games) { %>
+        <% 
+          for (const game of games) { %>
           <li><a href="/game/<%=game.name%>"><%=game.title%></a></li>
         <% }; %>
       </ul>
@@ -23,9 +26,7 @@
   </header>
   <main>
     <h3>
-      <% if (locals.currentGame) { %>
-        <%= locals.games.find(game => game.name === currentGame).title %>
-      <% } else if (locals.title) { %>
-        <%= title %>
+      <% if (locals.title) { %>
+        <%=title%>
         <% } %>
     </h3>

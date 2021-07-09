@@ -2,29 +2,31 @@ const express = require('express');
 
 let router = express.Router();
 
-// on stock les jeux dans les locals pour l'envoyer à nos vues
-// router.use((req, res, next) => {
-//     res.locals.gamesData = gamesData;
-//     next();
-// });
+const games = require('../games.json');
 
 router.get('/', (req, res) => {
+    res.locals.games = games;
     res.render('index');
 });
 
 // Dynamic route
 router.get('/game/:gameName', (req, res) => {
-    const currentGame = req.params.gameName;
+    res.locals.games = games;
 
-    res.locals.currentGame = currentGame;
+    const paramsGameName = req.params.gameName;
+    const currentGame = games.find(game => game.name === paramsGameName);
 
-    // currentGame = gamesData.find(game => game.name === currentGameName);
+    if (!currentGame) {
+        console.log('first 404');
+        res.status(404).render('404');
+        return;
+    }
 
-        res.render(currentGame);
+    res.render(paramsGameName, currentGame);
 });
 
 
-router.use('',(req, res) => {
+router.use('', (req, res) => {
     res.render('404');
 });
 
