@@ -21,11 +21,6 @@ const routes = require('./public/routes');
 
 app.use(routes);
 
-// app.locals.games = require('./games.json');
-
-// OR (defines games in one step)
-// app.locals.games = require('./games.json');
-
 app.listen(PORT, () => {
     console.log(`app live on server http://localhost:${PORT}`);
 })

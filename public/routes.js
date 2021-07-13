@@ -4,17 +4,13 @@ let router = express.Router();
 
 const games = require('../games.json');
 
-const dayjs = require('dayjs');
-var utc = require('dayjs/plugin/utc')
-// dayjs.extend(utc)
-
 router.use((req, res, next) => {
-    let logInfo = {};
-    let now = dayjs().format();
-
-    console.log(`[${now} ${req.ip}] ${req.originalUrl}`);
+    res.locals.games = games;
     next();
-})
+});
+
+const log = require('./log');
+router.use(log);
 
 router.get('/', (req, res) => {
     res.locals.games = games;
@@ -22,26 +18,21 @@ router.get('/', (req, res) => {
 });
 
 // Dynamic route
-router.get('/game/:gameName', (req, res) => {
-    res.locals.games = games;
-
+router.get('/game/:gameName', (req, res, next) => {
     const paramsGameName = req.params.gameName;
     const currentGame = games.find(game => game.name === paramsGameName);
 
     if (!currentGame) {
-        res.status(404).render('404');
-        console.error('game not found');
+        console.log('hello not found');
+        next();
         return;
     }
-
     res.render(paramsGameName, currentGame);
 });
 
 
 router.use('', (req, res) => {
-    res.render('404', {
-        games
-    });
+    res.status(404).render('404');
 });
 
 module.exports = router;
